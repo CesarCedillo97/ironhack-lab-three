@@ -1,39 +1,57 @@
 import React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
-import { DefaultPricingStrategy } from "./src/components/DefaultPricingStrategy";
-import { ConsolePaymentProcessor } from "./src/components/ConsolePaymentProcessor";
-import { ShoppingCart } from "./src/components/ShoppingCart";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import LoginScreen from "./src/modules/loginMVP/views/LoginScreen";
+import ProductCatalogScreen from "./src/modules/productCatalogMVVM/view/ProductCatalogScreen";
+import ProductManagementScreen from "./src/modules/productManagementHEXAGONAL/ProductManagementScreen";
+import ShoppingCartScreen from "./src/modules/shoppingCartSOLID/ShoppinCart";
+import { Icon } from "react-native-elements";
 
-const App = () => {
-  const pricingStrategy = new DefaultPricingStrategy();
-  const paymentProcessor = new ConsolePaymentProcessor();
-  const cart = new ShoppingCart(pricingStrategy, paymentProcessor);
+const Tab = createBottomTabNavigator();
 
-  const handleCheckout = () => {
-    console.log("Total Price:", cart.calculateTotal());
-    cart.checkout();
-  };
-
+const App: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Shopping Cart</Text>
-      <Button title="Add Item" onPress={() => cart.addItem("Orange", 2, 2)} />
-      <View style={{ margin: 10 }} />
-      <Button title="Checkout" onPress={handleCheckout} />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator initialRouteName="Login">
+        <Tab.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="login" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Prdct Mngr"
+          component={ProductManagementScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="description" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Product Catalog"
+          component={ProductCatalogScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="add" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Shopping Cart"
+          component={ShoppingCartScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="shopping-cart" color={color} size={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-});
 
 export default App;
