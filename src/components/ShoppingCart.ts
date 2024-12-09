@@ -1,6 +1,6 @@
 import { CartItem } from "./CartItem";
-import { PaymentProcessor } from "./PaymentProcessor";
 import { PricingStrategy } from "./PricingStrategy";
+import { PaymentProcessor } from "./PaymentProcessor";
 
 export class ShoppingCart {
   private items: CartItem[] = [];
@@ -12,6 +12,7 @@ export class ShoppingCart {
 
   addItem(name: string, price: number, quantity: number): void {
     this.items.push({ name, price, quantity });
+    console.log(`Item added: ${name} (${quantity} x $${price})`);
   }
 
   calculateTotal(): number {

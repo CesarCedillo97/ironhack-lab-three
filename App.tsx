@@ -9,9 +9,6 @@ const App = () => {
   const paymentProcessor = new ConsolePaymentProcessor();
   const cart = new ShoppingCart(pricingStrategy, paymentProcessor);
 
-  cart.addItem("Apple", 1.5, 3);
-  cart.addItem("Banana", 0.8, 5);
-
   const handleCheckout = () => {
     console.log("Total Price:", cart.calculateTotal());
     cart.checkout();
@@ -20,6 +17,8 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Shopping Cart</Text>
+      <Button title="Add Item" onPress={() => cart.addItem("Orange", 2, 2)} />
+      <View style={{ margin: 10 }} />
       <Button title="Checkout" onPress={handleCheckout} />
     </View>
   );
